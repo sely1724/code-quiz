@@ -4,10 +4,10 @@
     //create click
 
 //create timer function
-var userScore = "";
-var highScore = "";
-var totalSeconds = 60;
-var timeEl = document.querySelector("#time");
+//var userScore = "";
+//var highScore = "";
+//var totalSeconds = 60;
+//var timeEl = document.querySelector("#time");
 /*function timeCountDown(){
 //for each interval, function executes
 setInterval(function() {
@@ -18,16 +18,15 @@ setInterval(function() {
     }
   }, 1000);
 }*/
+ 
+//var startQuiz= document.querySelector("#start-quiz");
 
-    
-var startQuiz= document.querySelector("#start-quiz");
-
-startQuiz.addEventListener("click", function (event)){
+//startQuiz.addEventListener("click", function (event)){}
 //create timer function
 //setTimer();
 
 
-}
+
 
 
 
@@ -52,8 +51,24 @@ checkHighScore.addEventListener("click", function (event)) {}
 //Store Questions as methods
 
 
-var question1 = {
-    question: "What does HTML stand for?";
-    options: ["Hypertext Processing Language", "Hyperfile Programming Learning", "Humans Phone Log"];
-    correct answer:"Hypertext Processing Language",
+
+var question = {
+    title: "What does HTML stand for?",
+    alt: ["Hypertext Processing Language", "Hyperfile Programming Learning", "Humans Phone Log"],
+    correctanswer:"Hypertext Processing Language"
     }
+
+function showQuestion(q){
+var titleDiv = document.getElementById("title");
+titleDiv.textContent = q.title; 
+
+var alt = document.querySelectorAll(".alt");
+for(var i = 0; i < q.alt.length; i++){
+	alt.textContent = q.alt[i];
+    console.log(alt.textContent );
+    //printing onto console, but not to HTML.
+
+}}
+
+
+showQuestion(question);
