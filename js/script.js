@@ -3,7 +3,9 @@
 //1. When Press Start, timer starts.  
     //create click
 
-typefaceEl.addEventListener("change", function (event) {
+var startQuiz= document.querySelector("#start-quiz");
+
+startQuiz.addEventListener("click", function (event) {
 
 
 }
