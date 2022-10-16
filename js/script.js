@@ -52,27 +52,66 @@ checkHighScore.addEventListener("click", function (event)) {}
 
 
 
-var question = {
-    title: "What does HTML stand for?",
-    alt: ["Hypertext Processing Language", "Hyperfile Programming Learning", "Humans Phone Log"],
+
+var questionArray = [
+   {question: "What does HTML stand for?",
+    possibleAnswers: ["Hypertext Processing Language", "Hyperfile Programming Learning", "Humans Phone Log"],
     correctanswer: 0
+    },
+   {question: "What's Sylvia's fav food?",
+    possibleAnswers: ["Pizza", "Lox on a Poppyseed Bagel", "Panang Curry"],
+    correctanswer: 1
+    },
+   {question: "What color cat is Simba",
+    possibleAnswers: ["Black", "Orange", "White"],
+    correctanswer: 1
     }
+];
+/*
+question.forEach(function(index){
 
-function showQuestion(q){
+askQuestion(question[index]);
 
-var titleDiv = document.getElementById("title");
-titleDiv.textContent = q.title; 
 
-var alt = document.querySelectorAll(".alt");
-alt.forEach(function(element,index){
-    element.textContent = q.alt[index];
+
+forEach(function(element,index){
+
     element.addEventListener("click", function(){
         if(q.correctanswer == index){
             console.log("correct");
+            element.style.color = "#90EE90";
         }
+        else{element.style.color = "red";}
     });
  });
-
 }
 
-showQuestion(question);
+});*/
+
+
+
+var questionAsked = document.getElementById("title");
+var options = document.querySelectorAll(".alt");
+
+
+function askQuestion() {
+    questionAsked.textContent = questionArray[1].question;
+
+    options.forEach(function(element,index){
+      element.textContent = questionArray[1].possibleAnswers[index];
+      element.addEventListener("click", function(){
+        if(questionArray[1].correctanswer == index){
+            console.log("correct");
+            element.style.color = "#90EE90";
+        }
+        else{element.style.color = "red";}
+    });
+
+
+
+    })
+};
+
+
+
+askQuestion();
