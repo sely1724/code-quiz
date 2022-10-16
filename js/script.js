@@ -48,27 +48,31 @@ checkHighScore.addEventListener("click", function (event)) {}
 
 
 
-//Store Questions as methods
+//Store Questions as objects
 
 
 
 var question = {
     title: "What does HTML stand for?",
     alt: ["Hypertext Processing Language", "Hyperfile Programming Learning", "Humans Phone Log"],
-    correctanswer:"Hypertext Processing Language"
+    correctanswer: 0
     }
 
 function showQuestion(q){
+
 var titleDiv = document.getElementById("title");
 titleDiv.textContent = q.title; 
 
 var alt = document.querySelectorAll(".alt");
-for(var i = 0; i < q.alt.length; i++){
-	alt.textContent = q.alt[i];
-    console.log(alt.textContent );
-    //printing onto console, but not to HTML.
+alt.forEach(function(element,index){
+    element.textContent = q.alt[index];
+    element.addEventListener("click", function(){
+        if(q.correctanswer == index){
+            console.log("correct");
+        }
+    });
+ });
 
-}}
-
+}
 
 showQuestion(question);
