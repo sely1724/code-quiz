@@ -1,8 +1,3 @@
-var question = {
-    question: "What does HTML stand for?",
-    possibleAnswers: ["Hypertext Processing Language", "Hyperfile Programming Learning", "Humans Phone Log"],
-    correctAnswer: 0
-    }
 
 
 var questionArray = [
@@ -26,14 +21,17 @@ var questionArray = [
  // define the object for the question entity
   var app = {
     start: function() {
+      //this?? how should we define curr position?? 
      this.currPosition = 0;
+     this.yourScore = 0;
+     this.texttobechanged = '';
       // get options
-    
+      this.updateStats(this.yourScore);
       var alts = document.querySelectorAll('.option');
         alts.forEach((element, index) => {
         element.addEventListener("click", () => {
           // check correct answer
-          this.checkAnswer(index);
+          this.checkAnswer(element,index);
         });
       });
     
@@ -43,35 +41,79 @@ var questionArray = [
     showQuestion: function(q) {
         // show question
         var questionAsked= document.getElementById('title');
-        questionAsked.textContent = q.question; 
+        setTimeout(() => {
+          questionAsked.textContent = q.question; 
+        }, 100);
+       // questionAsked.textContent = q.question; 
             
             // show options
         var alts = document.querySelectorAll('.option');
-        alts.forEach(function(element, index){
-         element.textContent = q.possibleAnswers[index];
-            });    
-            }, 
-    checkAnswer: function(userSelected){
+        setTimeout(() => {
+          alts.forEach(function(element, index){
+            element.style.color = "black"
+            element.textContent = q.possibleAnswers[index];
+               })
+              
+              },100)}, 
+
+
+    checkAnswer: function(elementClickedOn, index){
+        var correct;
         var currQuestion = questionArray[this.currPosition];
-        if(currQuestion.correctAnswer == userSelected) {
+        if(currQuestion.correctAnswer == index) {
+        this.texttobechanged = currQuestion.possibleAnswers[index];
         console.log("correct");
+        correct = true;
+        this.yourScore+= 5;
+        this.updateStats(this.yourScore); 
+        
+        
         }
         else{
-        console.log("incorret");
+        console.log("incorrect");
+        correct = false;        
         }
-
+        this.flashTextColor(elementClickedOn, correct);
         this.increasePosition();
         this.showQuestion(questionArray[this.currPosition]);
 
     },
-        //increas position 
+
+    updateStats: function(yourScore){
+      var score = document.getElementById('points-earned');
+        score.textContent = "Your Score: " + yourScore; 
+    },
+    flashTextColor: function(elementClickedOn, correct)//correct, texttobechanged)
+    {
+      if (correct == true) {
+        //elementClickedOn.style.color = "#90EE90";
+
+        
+          elementClickedOn.style.color = "#90EE90";
+  
+      }
+      else {
+        // setTimeout(() => {
+        //   elementClickedOn.style.color = "red";
+        // }, 500);
+        elementClickedOn.style.color = "red";
+
+      }
+        
+    },
+    
+
+        //increase position 
     increasePosition: function() {
+    
         this.currPosition++;
 
+       
+      if(this.currPosition == questionArray.length){
+      return;
+      //available questions.shift - remove question from queue instead?? Or just start new function.  hide elements/show
 
-        if(this.currPosition == questionArray.length){
-            // send back to the beginning
-            this.currPosition = 0;
+          
     }
 
     
@@ -79,5 +121,10 @@ var questionArray = [
   
   // initialize the application
   app.start();
+
+
+
+  //next function or place to show high score
+
 
 
