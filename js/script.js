@@ -66,8 +66,6 @@ var questionArray = [
         correct = true;
         this.yourScore+= 5;
         this.updateStats(this.yourScore); 
-        
-        
         }
         else{
         console.log("incorrect");
@@ -76,48 +74,54 @@ var questionArray = [
         this.flashTextColor(elementClickedOn, correct);
         this.increasePosition();
         this.showQuestion(questionArray[this.currPosition]);
-
     },
-
     updateStats: function(yourScore){
       var score = document.getElementById('points-earned');
         score.textContent = "Your Score: " + yourScore; 
     },
-    flashTextColor: function(elementClickedOn, correct)//correct, texttobechanged)
-    {
+    flashTextColor: function(elementClickedOn, correct){
       if (correct == true) {
         //elementClickedOn.style.color = "#90EE90";
-
-        
-          elementClickedOn.style.color = "#90EE90";
-  
-      }
+        elementClickedOn.style.color = "#90EE90";
+        }
       else {
         // setTimeout(() => {
         //   elementClickedOn.style.color = "red";
         // }, 500);
         elementClickedOn.style.color = "red";
-
-      }
-        
-    },
-    
+    }},
 
         //increase position 
     increasePosition: function() {
-    
-        this.currPosition++;
-
-       
+      this.currPosition++; 
       if(this.currPosition == questionArray.length){
       return;
-      //available questions.shift - remove question from queue instead?? Or just start new function.  hide elements/show
+      //available questions.shift - remove question from queue instead?? Or just start new function.  hide elements/show??
+    }},
 
-          
+    startTimer: function(){
+      var timerEl = document.getElementById('countdown');
+     function countdown() {
+      var timeLeft = 60;
+      var timeInterval = setInterval(function () {
+        if (timeLeft > 1) {
+          timerEl.textContent = timeLeft + ' seconds remaining';
+          timeLeft--;
+        } else if (timeLeft === 1) {
+          timerEl.textContent = timeLeft + ' second remaining';
+          timeLeft--;
+        } else {
+          timerEl.textContent = '';
+          clearInterval(timeInterval);
+          // Call the `displayMessage()` function
+          //displayMessage();
+        }
+      }, 1000);
+
     }
 
-    
-  }   };
+
+}
   
   // initialize the application
   app.start();
