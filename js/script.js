@@ -18,6 +18,10 @@ var questionArray = [
      }];
     
 
+var instructionsStart = document.querySelectorAll(".instructions container");
+var startButton = document.getElementById("start-quiz");
+
+     
  // define the object for the question entity
   var app = {
     start: function() {
@@ -44,9 +48,6 @@ var questionArray = [
         setTimeout(() => {
           questionAsked.textContent = q.question; 
         }, 100);
-       // questionAsked.textContent = q.question; 
-            
-            // show options
         var alts = document.querySelectorAll('.option');
         setTimeout(() => {
           alts.forEach(function(element, index){
@@ -96,32 +97,15 @@ var questionArray = [
       this.currPosition++; 
       if(this.currPosition == questionArray.length){
       return;
-      //available questions.shift - remove question from queue instead?? Or just start new function.  hide elements/show??
-    }},
-
-    startTimer: function(){
-      var timerEl = document.getElementById('countdown');
-     function countdown() {
-      var timeLeft = 60;
-      var timeInterval = setInterval(function () {
-        if (timeLeft > 1) {
-          timerEl.textContent = timeLeft + ' seconds remaining';
-          timeLeft--;
-        } else if (timeLeft === 1) {
-          timerEl.textContent = timeLeft + ' second remaining';
-          timeLeft--;
-        } else {
-          timerEl.textContent = '';
-          clearInterval(timeInterval);
-          // Call the `displayMessage()` function
-          //displayMessage();
-        }
-      }, 1000);
-
+      
     }
+    }
+  }
 
 
-}
+//listen for start button click
+
+
   
   // initialize the application
   app.start();
