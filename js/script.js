@@ -16,7 +16,40 @@ var questionArray = [
     possibleAnswers: ["Black", "Orange", "White"],
     correctAnswer: 1
      }];
+
+//initialize outside     
     
+var timerElement = document.getElementById("time");
+var timerCount = 60;
+var initializeTimer;
+
+
+
+
+var texttobechanged;
+
+
+
+function startTimer(timerElement, timerCount, initializeTimer){
+    initializeTimer = setInterval(function() {
+      timerCount--;
+      timerElement.textContent = timerCount;
+      if (timerCount >= 0) {
+        // Tests if win condition is met
+        console.log("stillgoing")
+        }
+      
+      // Tests if time has run out
+      if (timerCount === 0) {
+        // Clears interval
+        clearInterval(initializeTimer);
+
+      }
+    }, 1000);
+  }
+
+
+
 
 
 
@@ -27,7 +60,8 @@ var questionArray = [
     start: function() {
      this.currPosition = 0;
      this.yourScore = 0;
-     this.texttobechanged = '';
+    
+     this.questionAsked= document.getElementById('title');
     
       // get options
       this.updateStats(this.yourScore);
@@ -38,45 +72,16 @@ var questionArray = [
           this.checkAnswer(element,index);
         });
       });
-    
-      this.showQuizContainer();
-      this.startTime();//???????
       this.showQuestion(questionArray[this.currPosition]);
-    },
 
-    showQuizContainer: function() {
-      var questionStructure = document.getElementById("question-structure");
-      questionStructure.setAttribute("style", "display:block");
-      },
-
-    startTime: function() {
-        var timerInterval = setInterval(function () {
-          // EVENT HANDLER: this function is automatically called when the interval event happens
-          var timeText = document.getElementById("time");
-          this.timeLeft = 60;
-          // Update State
-          timeLeft--;
-      
-          // Update UI
-          timeText.textContent = timeLeft + " seconds left till colorsplosion.";
-      
-          // Check for exit state: Are we done?
-          if (timeLeft === 0) {
-            // Stops execution of action at set interval
-            clearInterval(timerInterval);
-            // Calls function to create and append image
-  
-          }
-        }, 1000);
     },
 
 
     showQuestion: function(q) {
         // show question
-        var questionAsked= document.getElementById('title');
-        setTimeout(() => {
-          questionAsked.textContent = q.question; 
-        }, 100);
+        
+        this.questionAsked.textContent = q.question; 
+       
         var alts = document.querySelectorAll('.option');
         setTimeout(() => {
           alts.forEach(function(element, index){
@@ -132,7 +137,11 @@ var questionArray = [
   }
 
 
-function initialize(){
+
+
+
+
+function initialize(timerElement, timerCount, initializeTimer){
   var startButton = document.getElementById("start-quiz");
   var questionStructure = document.getElementById("question-structure");
   questionStructure.setAttribute("style", "display:none");
@@ -141,11 +150,16 @@ function initialize(){
     var instructionsStart = document.getElementById("instructions");
     instructionsStart.setAttribute("style", "display:none");
     startButton.setAttribute("style", "display:none");
+    questionStructure.setAttribute("style", "display:block");
     app.start();    
+    startTimer(timerElement, timerCount, initializeTimer);    
   });
 
 }
-initialize();
+initialize(timerElement,timerCount, initializeTimer);
+
+
+
 
 
 
