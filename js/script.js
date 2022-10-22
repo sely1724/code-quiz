@@ -25,10 +25,10 @@ var questionArray = [
  // define the object for the question entity
   var app = {
     start: function() {
-      //this?? how should we define curr position?? 
      this.currPosition = 0;
      this.yourScore = 0;
      this.texttobechanged = '';
+    
       // get options
       this.updateStats(this.yourScore);
       var alts = document.querySelectorAll('.option');
@@ -40,15 +40,34 @@ var questionArray = [
       });
     
       this.showQuizContainer();
-      //this.showTime()???
+      this.startTime();//???????
       this.showQuestion(questionArray[this.currPosition]);
     },
 
     showQuizContainer: function() {
       var questionStructure = document.getElementById("question-structure");
       questionStructure.setAttribute("style", "display:block");
+      },
+
+    startTime: function() {
+        var timerInterval = setInterval(function () {
+          // EVENT HANDLER: this function is automatically called when the interval event happens
+          var timeText = document.getElementById("time");
+          this.timeLeft = 60;
+          // Update State
+          timeLeft--;
       
-    
+          // Update UI
+          timeText.textContent = timeLeft + " seconds left till colorsplosion.";
+      
+          // Check for exit state: Are we done?
+          if (timeLeft === 0) {
+            // Stops execution of action at set interval
+            clearInterval(timerInterval);
+            // Calls function to create and append image
+  
+          }
+        }, 1000);
     },
 
 
