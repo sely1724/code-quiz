@@ -18,8 +18,8 @@ var questionArray = [
      }];
     
 
-var instructionsStart = document.querySelectorAll(".instructions container");
-var startButton = document.getElementById("start-quiz");
+
+
 
      
  // define the object for the question entity
@@ -39,9 +39,19 @@ var startButton = document.getElementById("start-quiz");
         });
       });
     
-      // show first question
+      this.showQuizContainer();
+      //this.showTime()???
       this.showQuestion(questionArray[this.currPosition]);
     },
+
+    showQuizContainer: function() {
+      var questionStructure = document.getElementById("question-structure");
+      questionStructure.setAttribute("style", "display:block");
+      
+    
+    },
+
+
     showQuestion: function(q) {
         // show question
         var questionAsked= document.getElementById('title');
@@ -103,16 +113,20 @@ var startButton = document.getElementById("start-quiz");
   }
 
 
-//listen for start button click
+function initialize(){
+  var startButton = document.getElementById("start-quiz");
+  var questionStructure = document.getElementById("question-structure");
+  questionStructure.setAttribute("style", "display:none");
 
+  startButton.addEventListener("click", () => {
+    var instructionsStart = document.getElementById("instructions");
+    instructionsStart.setAttribute("style", "display:none");
+    startButton.setAttribute("style", "display:none");
+    app.start();    
+  });
 
-  
-  // initialize the application
-  app.start();
-
-
-
-  //next function or place to show high score
+}
+initialize();
 
 
 
