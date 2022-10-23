@@ -19,21 +19,25 @@ var questionArray = [
 //initialize outside     
   
 var timerElement = document.getElementById("time");
-var timerCount = 10;// change to 60 later.
+var scoreElement = document.getElementById("score");
+var finalScoreElement = document.querySelector(".finalScore");
+var questionAsked= document.getElementById('title');
+var questionStructure = document.getElementById("question-structure");
+var currPosition = 0;
+var yourScore = 0;
+var timerCount = 60;// change to 60 later.
 var initializeTimer;
-var finalScore = document.getElementById("score");
 var arrayLength = questionArray.length;
 
 
 
-var texttobechanged;
-var scoreArray = [];
+//var texttobechanged;
+//var scoreArray = [];
 
 
 //decided to keep this function outside app object since it runs slightly separate.
 function startTimer(){
   timerElement.textContent = timerCount + " seconds left";
-  var currPosition = app.currPosition;
   initializeTimer = setInterval(function() {
     timerCount--;
     timerElement.textContent = timerCount;
@@ -45,18 +49,8 @@ function startTimer(){
       }
     
     // Tests if time has run out
-    if (timerCount <=0 || arrayLength == currPosition + 1) {
-      // Clears interval
-     
-      clearInterval(initializeTimer);
-      timerElement.textContent = "Game Over"
-      
-      //figure out how to log score when it hits 0.
-    finalScore.setAttribute("style", "display:block");
-    finalScore.textContent = "Your Score: " + app.yourScore;
-    
-
-
+    if (timerCount <=0) {
+      showScore();
 
     }
   }, 1000);
@@ -68,25 +62,24 @@ function startTimer(){
 
 
 
+
+
    
 // define the object for the question entity
 var app = {
   start: function() {
-   this.currPosition = 0;
-   this.yourScore = 0;
-  
-   this.questionAsked= document.getElementById('title');
+   currPosition = 0;
   
     // get options
-    this.updateStats(this.yourScore);
+    this.updateStats(yourScore);
     var alts = document.querySelectorAll('.option');
       alts.forEach((element, index) => {
       element.addEventListener("click", () => {
-        // check correct answer
+
         this.checkAnswer(element,index);
       });
     });
-    this.showQuestion(questionArray[this.currPosition]);
+    this.showQuestion(questionArray[currPosition]);
 
   },
 
@@ -94,7 +87,7 @@ var app = {
   showQuestion: function(q) {
       // show question
       
-      this.questionAsked.textContent = q.question; 
+      questionAsked.textContent = q.question; 
      
       var alts = document.querySelectorAll('.option');
       setTimeout(() => {
@@ -108,13 +101,13 @@ var app = {
 
   checkAnswer: function(elementClickedOn, index){
       var correct;
-      var currQuestion = questionArray[this.currPosition];
-      console.log(this.currPosition)
+      var currQuestion = questionArray[currPosition];
+      console.log(currPosition)
       if(currQuestion.correctAnswer == index) {
-      this.texttobechanged = currQuestion.possibleAnswers[index];
+      //texttobechanged = currQuestion.possibleAnswers[index];
       correct = true;
-      this.yourScore+= 5;
-      this.updateStats(this.yourScore); 
+      yourScore+= 5;
+      this.updateStats(yourScore); 
       }
       else{
       correct = false;     
@@ -131,7 +124,7 @@ var app = {
       }
       this.flashTextColor(elementClickedOn, correct);
       this.increasePosition();
-      this.showQuestion(questionArray[this.currPosition]);
+      this.showQuestion(questionArray[currPosition]);
   },
   updateStats: function(yourScore){
     var score = document.getElementById('points-earned');
@@ -139,36 +132,44 @@ var app = {
   },
   flashTextColor: function(elementClickedOn, correct){
     if (correct == true) {
-      //elementClickedOn.style.color = "#90EE90";
       elementClickedOn.style.color = "#90EE90";
       }
     else {
-      // setTimeout(() => {
-      //   elementClickedOn.style.color = "red";
-      // }, 500);
       elementClickedOn.style.color = "red";
   }},
 
       //increase position 
   increasePosition: function() {
-    this.currPosition++; 
-    if(this.currPosition == questionArray.length){
-    return;
-    
+    if (currPosition < questionArray.length - 1){
+      currPosition++;
+    }
+    else{
+      //clearInterval(initializeTimer);
+      //timerElement.textContent = "Game Over";
+      showScore()
+    }
   }
   }
+
+
+function showScore(){
+  clearInterval(initializeTimer);
+  timerElement.textContent = "Game Over";
+  questionStructure.setAttribute("style", "display:none");
+  scoreElement.setAttribute("style", "display:block");
+  finalScoreElement.textContent = "Your Final Score: " + yourScore;
+
+
 }
 
 
 
 
 
-
-function initialize(timerElement, timerCount, initializeTimer){
+function initialize(){
 var startButton = document.getElementById("start-quiz");
-var questionStructure = document.getElementById("question-structure");
 questionStructure.setAttribute("style", "display:none");
-finalScore.setAttribute("style", "display:none");
+scoreElement.setAttribute("style", "display:none");
 
 startButton.addEventListener("click", () => {
   var instructionsStart = document.getElementById("instructions");
