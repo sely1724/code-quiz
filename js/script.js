@@ -22,6 +22,9 @@ var timerElement = document.getElementById("time");
 var timerCount = 10;// change to 60 later.
 var initializeTimer;
 var finalScore = document.getElementById("score");
+var arrayLength = questionArray.length;
+
+
 
 var texttobechanged;
 var scoreArray = [];
@@ -30,9 +33,11 @@ var scoreArray = [];
 //decided to keep this function outside app object since it runs slightly separate.
 function startTimer(){
   timerElement.textContent = timerCount + " seconds left";
+  var currPosition = app.currPosition;
   initializeTimer = setInterval(function() {
     timerCount--;
     timerElement.textContent = timerCount;
+
     if (timerCount >= 0) {
       // Tests if win condition is met
       timerElement.textContent = timerCount + " seconds left";
@@ -40,13 +45,16 @@ function startTimer(){
       }
     
     // Tests if time has run out
-    if (timerCount <=0 ) {
+    if (timerCount <=0 || arrayLength == currPosition + 1) {
       // Clears interval
+     
       clearInterval(initializeTimer);
-      console.log("end")
+      timerElement.textContent = "Game Over"
+      
       //figure out how to log score when it hits 0.
     finalScore.setAttribute("style", "display:block");
     finalScore.textContent = "Your Score: " + app.yourScore;
+    
 
 
 
@@ -101,15 +109,14 @@ var app = {
   checkAnswer: function(elementClickedOn, index){
       var correct;
       var currQuestion = questionArray[this.currPosition];
+      console.log(this.currPosition)
       if(currQuestion.correctAnswer == index) {
       this.texttobechanged = currQuestion.possibleAnswers[index];
-      console.log("correct");
       correct = true;
       this.yourScore+= 5;
       this.updateStats(this.yourScore); 
       }
       else{
-      console.log("incorrect");
       correct = false;     
       if(timerCount >= 10)
       {
