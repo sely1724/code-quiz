@@ -19,27 +19,36 @@ var questionArray = [
 //initialize outside     
   
 var timerElement = document.getElementById("time");
-var timerCount = 60;
+var timerCount = 10;// change to 60 later.
 var initializeTimer;
+var finalScore = document.getElementById("score");
 
 var texttobechanged;
+var scoreArray = [];
 
 
-
+//decided to keep this function outside app object since it runs slightly separate.
 function startTimer(){
-  timerElement.textContent = timerCount;
+  timerElement.textContent = timerCount + " seconds left";
   initializeTimer = setInterval(function() {
     timerCount--;
     timerElement.textContent = timerCount;
     if (timerCount >= 0) {
       // Tests if win condition is met
-      console.log("stillgoing")
+      timerElement.textContent = timerCount + " seconds left";
+      
       }
     
     // Tests if time has run out
-    if (timerCount === 0) {
+    if (timerCount <=0 ) {
       // Clears interval
       clearInterval(initializeTimer);
+      console.log("end")
+      //figure out how to log score when it hits 0.
+    finalScore.setAttribute("style", "display:block");
+    finalScore.textContent = "Your Score: " + app.yourScore;
+
+
 
     }
   }, 1000);
@@ -102,7 +111,16 @@ var app = {
       else{
       console.log("incorrect");
       correct = false;     
-      timerCount-=10;   
+      if(timerCount >= 10)
+      {
+        timerCount-= 10;
+      }
+      else{
+        timerCount = 0;
+
+      }
+      
+      
       }
       this.flashTextColor(elementClickedOn, correct);
       this.increasePosition();
@@ -143,6 +161,7 @@ function initialize(timerElement, timerCount, initializeTimer){
 var startButton = document.getElementById("start-quiz");
 var questionStructure = document.getElementById("question-structure");
 questionStructure.setAttribute("style", "display:none");
+finalScore.setAttribute("style", "display:none");
 
 startButton.addEventListener("click", () => {
   var instructionsStart = document.getElementById("instructions");
