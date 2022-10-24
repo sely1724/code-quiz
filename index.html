@@ -9,16 +9,12 @@
 </head>
 
 <body>
-    <header>Code Quiz</header>
-     <h2 id="time" style="text-align: right"></h2>
-     <button id="highscore" class="btn">View Highscores</button>
+    <header><h1>Code Quiz</h1></header>
+     <div id="time" style="text-align: right"></div>
+     <!--leaving off for now... expect to work on this in the future <button id="highscore" class="btn">View Highscores</button> -->
   
-    <div id = "formatcontainer" class="container">
-      <!--  <button id="high-score" class="btn">View Highscore</button>
-      <div id="countdown">time</div> -->   
-   
- 
-    <div id="question-structure">
+  
+      <div id="question-structure" class="container">
         <div id="title"></div>
         <ul>
           <li class="option"></li>
@@ -27,18 +23,18 @@
         </ul>
 
     <div id="points-earned"> Your Score: </div>
-  </div></div>
+  </div>
 
 
-  <div id = "instructions" class="container">
-        <h2> Instructions</h2>
+  <div id="instructions" class="container">
+        <h2> Instructions</h2></br>
 
-       <div>You ready to play a game?? Try to answer the following code 
+       <p>You ready to play a game?? Try to answer the following code 
           questions.  You'll have 60 seconds to answer as many code 
-          questions as you can.  For each incorrect answer, 5 seconds will 
+          questions as you can.  For each incorrect answer, 10 seconds will 
           be deducted from your time.  At the end of the game, you'll see 
-          your score and add initials.  High scores are tracked.  </div></div>
-    <button id="start-quiz" class="btn">Start Quiz</button>
+          your score and add initials.  High scores are tracked.  </p></div>
+   <button id="start-quiz" class="btn">Start Quiz</button>
 
 
 
@@ -55,7 +51,7 @@
 <div id = "highScoreDiv" class = "container">
     <h1>Highscores</h1>
     <div id = "scoreupdate"></div>
-    <ul id="highscorelist"></ul></div>
+    <ul  id="highscorelist"></ul></div>
     <div id=scoresText></div>
     
 

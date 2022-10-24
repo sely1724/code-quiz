@@ -157,7 +157,9 @@ submitButton.addEventListener("click", function(event) {
   if (userInitials === "") {
     alert("Initials cannot be blank");
   } 
-  else {renderHighScores(userInitials,yourScore)
+  else {
+  highScoreDiv.setAttribute("style", "display:block");
+  renderHighScores(userInitials,yourScore)
   };
 });
 
@@ -190,7 +192,7 @@ highScores = lastScore;
 var startButton = document.getElementById("start-quiz");
 questionStructure.setAttribute("style", "display:none");
 scoreElement.setAttribute("style", "display:none");
-highScoreButton.setAttribute("style", "display:none");
+highScoreDiv.setAttribute("style", "display:none");
 
 startButton.addEventListener("click", () => {
   var instructionsStart = document.getElementById("instructions");
