@@ -42,7 +42,7 @@ var scoreUpdate = document.getElementById('scoreupdate');
 var questionAsked= document.getElementById('title');
 var questionStructure = document.getElementById("question-structure");
 var highScoresList = document.getElementById("highscorelist");
-var highScoreButton = document.getElementById("highscore");
+//var highScoreButton = document.getElementById("highscore");
 var highScores = [];
 var currPosition = 0;
 var yourScore = 0;
@@ -147,7 +147,7 @@ function showScore(){
   questionStructure.setAttribute("style", "display:none");
   scoreElement.setAttribute("style", "display:block");
   finalScoreElement.textContent = "Your Final Score: " + yourScore;
-  highScoreButton.setAttribute("style", "display:block");
+  //highScoreButton.setAttribute("style", "display:block");
 }
 
 //function adds event listener to submit button
@@ -166,8 +166,7 @@ submitButton.addEventListener("click", function(event) {
 //function shows "high scores" <-- really shows all scores right now.  Will change in future
 function renderHighScores(userInitials, yourScore) {
   highScores.push([userInitials, yourScore]);
-  
-      var scoresList = document.createElement("li")
+  var scoresList = document.createElement("li")
           highScoresList.appendChild(scoresList);
           scoresList.textContent = highScores[highScores.length - 1].join (": ");
       
