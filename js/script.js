@@ -166,11 +166,11 @@ submitButton.addEventListener("click", function(event) {
 //function shows "high scores" <-- really shows all scores right now.  Will change in future
 function renderHighScores(userInitials, yourScore) {
   highScores.push([userInitials, yourScore]);
-  if (highScores !== null) {
+  
       var scoresList = document.createElement("li")
           highScoresList.appendChild(scoresList);
           scoresList.textContent = highScores[highScores.length - 1].join (": ");
-      }
+      
 localStorage.setItem('highscoreStorage', JSON.stringify(highScores));
 }
 
@@ -187,7 +187,7 @@ var lastScore = JSON.parse(localStorage.getItem('highscoreStorage'));
   }
 }
   else {scoreUpdate.textContent = "No Highscores Recorded"
-  localStorage.setItem('highscoreStorage', JSON.stringify(highScores));
+ // localStorage.setItem('highscoreStorage', JSON.stringify(highScores));
   }
   
 var startButton = document.getElementById("start-quiz");
