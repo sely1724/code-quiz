@@ -23,16 +23,18 @@ var scoreElement = document.getElementById("score");
 var finalScoreElement = document.querySelector(".finalScore");
 var questionAsked= document.getElementById('title');
 var questionStructure = document.getElementById("question-structure");
+var highScoresList = document.getElementById("highscorelist");
+var highScoreButton = document.getElementById("highscore");
+var highScores = [];
+//highscore ELE ADDED
+//need to make it a button??? j
+//VIEW HIGHSCORE = OWN FUNCTION.
+//ALSO CALLED AT END OF QUIZ WHEN USER ADDS THEIR INITIALS AND PRESSES SUBMIT
 var currPosition = 0;
 var yourScore = 0;
-var timerCount = 60;// change to 60 later.
+var timerCount = 60;
 var initializeTimer;
 var arrayLength = questionArray.length;
-
-
-
-//var texttobechanged;
-//var scoreArray = [];
 
 
 //decided to keep this function outside app object since it runs slightly separate.
@@ -55,12 +57,6 @@ function startTimer(){
     }
   }, 1000);
 }
-
-
-
-
-
-
 
 
 
@@ -102,9 +98,7 @@ var app = {
   checkAnswer: function(elementClickedOn, index){
       var correct;
       var currQuestion = questionArray[currPosition];
-      console.log(currPosition)
       if(currQuestion.correctAnswer == index) {
-      //texttobechanged = currQuestion.possibleAnswers[index];
       correct = true;
       yourScore+= 5;
       this.updateStats(yourScore); 
@@ -158,18 +152,48 @@ function showScore(){
   questionStructure.setAttribute("style", "display:none");
   scoreElement.setAttribute("style", "display:block");
   finalScoreElement.textContent = "Your Final Score: " + yourScore;
-
-
+  highScoreButton.setAttribute("style", "display:block");
 }
 
 
 
 
 
+
+var submitButton = document.getElementById("submit");
+
+
+
+submitButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  var userInitials = document.getElementById("initials").value;
+  
+  if (userInitials === "") {
+    alert("Initials cannot be blank");
+  } 
+    else {renderHighScores(userInitials,yourScore)};
+  });
+
+
+function renderHighScores(userInitials, yourScore) {
+  highScores.push([userInitials, yourScore]);
+  console.log(highScores)
+  if (highScores !== null) {
+      for (let i = 0; i < highScores.length; i++) {
+          var scoresLi = document.createElement("li")
+          scoresLi.textContent = highScores[i].join (": ");
+          console.log(highScores[i]);
+          highScoresList.appendChild(scoresLi);
+      }
+  localStorage.setItem('highscoreStorage', JSON.stringify(highScores));
+}}
+
 function initialize(){
+var lastScore = JSON.parse(localStorage.getItem('highscoreStorage'));
 var startButton = document.getElementById("start-quiz");
 questionStructure.setAttribute("style", "display:none");
 scoreElement.setAttribute("style", "display:none");
+highScoreButton.setAttribute("style", "display:none");
 
 startButton.addEventListener("click", () => {
   var instructionsStart = document.getElementById("instructions");

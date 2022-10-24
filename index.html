@@ -11,6 +11,7 @@
 <body>
     <header>Code Quiz</header>
      <h2 id="time" style="text-align: right"></h2>
+     <button id="highscore" class="btn">View Highscores</button>
   
     <div id = "formatcontainer" class="container">
       <!--  <button id="high-score" class="btn">View Highscore</button>
@@ -44,10 +45,18 @@
     <div id = "score" class = "container">
       <h2 class = "finalScore"> </h2>
       <form method="submit">
-            <label for="initials">Initials:</label><br>
+            <label for="initials">Add Initials:</label><br>
             <input type="text" id="initials" name="initials"><br>
+            <!--<input type="submit" id="submit" name="submit"><br> -->
+            <button id="submit">Submit</button>
         </form>
     </div>
+
+
+    <ul id="highscorelist">
+      <li>Coffee</li>
+      <li>Tea</li>
+    </ul>
     
 
 
