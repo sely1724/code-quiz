@@ -1,4 +1,4 @@
-
+//create question array
 var questionArray = [
   {
    question: "What does HTML stand for?",
@@ -6,146 +6,141 @@ var questionArray = [
    correctAnswer: 0
    },
   {
-  question: "What's Sylvia's fav food?",
-  possibleAnswers: ["Pizza", "Lox on a Poppyseed Bagel", "Panang Curry"],
+  question: "What property is used for changing the font face?",
+  possibleAnswers: ["font-type", "font-family", "times new roman"],
   correctAnswer: 1
    },
   {
-  question: "What color cat is Simba",
-  possibleAnswers: ["Black", "Orange", "White"],
+  question: "What symbols denote a tag in html?",
+  possibleAnswers: ["< >", "!!", "~ ~"],
+  correctAnswer: 0
+   },
+  {
+  question: "What's a rule to remember in JS?",
+  possibleAnswers: ["User Clicks Cannot Be Recorded", "Never Pull Information From HTML", "Almost All Events Bubble"],
+  correctAnswer: 0
+    },
+  {
+  question: "Math.random() is an example of what?",
+  possibleAnswers: ["string", "method", "function"],
   correctAnswer: 1
-   }];
+    },
+  {
+  question: "What are valid datatypes in JS?",
+  possibleAnswers: ["strings", "numbers", "both"],
+  correctAnswer: 2
+    }
+  ];
 
-//initialize outside     
-  
+ //hook to DOM and declare variables  
 var timerElement = document.getElementById("time");
 var scoreElement = document.getElementById("score");
 var finalScoreElement = document.querySelector(".finalScore");
+var highScoreDiv = document.getElementById('highScoreDiv');
+var submitButton = document.getElementById("submit");
+var scoreUpdate = document.getElementById('scoreupdate');
 var questionAsked= document.getElementById('title');
 var questionStructure = document.getElementById("question-structure");
 var highScoresList = document.getElementById("highscorelist");
 var highScoreButton = document.getElementById("highscore");
 var highScores = [];
-//highscore ELE ADDED
-//need to make it a button??? j
-//VIEW HIGHSCORE = OWN FUNCTION.
-//ALSO CALLED AT END OF QUIZ WHEN USER ADDS THEIR INITIALS AND PRESSES SUBMIT
 var currPosition = 0;
 var yourScore = 0;
 var timerCount = 60;
 var initializeTimer;
-var arrayLength = questionArray.length;
 
+//calling funtion to load initial elements 
+loadPage();
 
-//decided to keep this function outside app object since it runs slightly separate.
+//function starts Timer
 function startTimer(){
   timerElement.textContent = timerCount + " seconds left";
   initializeTimer = setInterval(function() {
     timerCount--;
     timerElement.textContent = timerCount;
-
+//tests if time is still running
     if (timerCount >= 0) {
-      // Tests if win condition is met
-      timerElement.textContent = timerCount + " seconds left";
-      
+    timerElement.textContent = timerCount + " seconds left";
       }
-    
-    // Tests if time has run out
+//tests if time has run out and if it has calls the show score function
     if (timerCount <=0) {
       showScore();
-
     }
   }, 1000);
 }
 
 
-
-   
-// define the object for the question entity
+// defines the object that holds functions related to the question process
 var app = {
   start: function() {
    currPosition = 0;
-  
-    // get options
     this.updateStats(yourScore);
     var alts = document.querySelectorAll('.option');
-      alts.forEach((element, index) => {
-      element.addEventListener("click", () => {
-
-        this.checkAnswer(element,index);
+//add event listener to list index options so that any could be clicked.  when clicked, check answer function is called 
+    alts.forEach((element, index) => {
+    element.addEventListener("click", () => {
+    this.checkAnswer(element,index);
       });
     });
     this.showQuestion(questionArray[currPosition]);
-
-  },
-
-
+    },
   showQuestion: function(q) {
-      // show question
-      
-      questionAsked.textContent = q.question; 
-     
-      var alts = document.querySelectorAll('.option');
-      setTimeout(() => {
-        alts.forEach(function(element, index){
-          element.style.color = "black"
-          element.textContent = q.possibleAnswers[index];
-             })
-            
-            },100)}, 
-
-
+//question array carried through
+    questionAsked.textContent = q.question; 
+    var alts = document.querySelectorAll('.option');
+    setTimeout(() => {
+     alts.forEach(function(element, index){
+     element.style.color = "black"
+     element.textContent = q.possibleAnswers[index];
+        }) 
+      },100)},
+//function checks answer and adds points/subtracts time 
   checkAnswer: function(elementClickedOn, index){
-      var correct;
-      var currQuestion = questionArray[currPosition];
-      if(currQuestion.correctAnswer == index) {
+    var correct;
+    var currQuestion = questionArray[currPosition];
+    if(currQuestion.correctAnswer == index) {
       correct = true;
       yourScore+= 5;
       this.updateStats(yourScore); 
       }
-      else{
+    else{
       correct = false;     
-      if(timerCount >= 10)
-      {
-        timerCount-= 10;
-      }
-      else{
-        timerCount = 0;
-
-      }
-      
-      
-      }
-      this.flashTextColor(elementClickedOn, correct);
-      this.increasePosition();
-      this.showQuestion(questionArray[currPosition]);
+        if(timerCount >= 10){
+          timerCount-= 10;
+        }
+        else {
+          timerCount = 0;
+        }
+    }
+    this.flashTextColor(elementClickedOn, correct);
+    this.increasePosition();
+    this.showQuestion(questionArray[currPosition]);
   },
+//function updates quiz with most recent user score
   updateStats: function(yourScore){
     var score = document.getElementById('points-earned');
-      score.textContent = "Your Score: " + yourScore; 
+    score.textContent = "Your Score: " + yourScore; 
   },
+//function flashes text color to indicate correct/incorrect answer
   flashTextColor: function(elementClickedOn, correct){
     if (correct == true) {
       elementClickedOn.style.color = "#90EE90";
-      }
+    }
     else {
       elementClickedOn.style.color = "red";
-  }},
-
-      //increase position 
+    }},
+//function increases position 
   increasePosition: function() {
     if (currPosition < questionArray.length - 1){
       currPosition++;
     }
     else{
-      //clearInterval(initializeTimer);
-      //timerElement.textContent = "Game Over";
       showScore()
     }
   }
-  }
+}
 
-
+//function displays score at the end of the game
 function showScore(){
   clearInterval(initializeTimer);
   timerElement.textContent = "Game Over";
@@ -155,41 +150,43 @@ function showScore(){
   highScoreButton.setAttribute("style", "display:block");
 }
 
-
-
-
-
-
-var submitButton = document.getElementById("submit");
-
-
-
+//function adds event listener to submit button
 submitButton.addEventListener("click", function(event) {
   event.preventDefault();
   var userInitials = document.getElementById("initials").value;
-  
   if (userInitials === "") {
     alert("Initials cannot be blank");
   } 
-    else {renderHighScores(userInitials,yourScore)};
-  });
+  else {renderHighScores(userInitials,yourScore)
+  };
+});
 
-
+//function shows "high scores" <-- really shows all scores right now.  Will change in future
 function renderHighScores(userInitials, yourScore) {
   highScores.push([userInitials, yourScore]);
   console.log(highScores)
   if (highScores !== null) {
-      for (let i = 0; i < highScores.length; i++) {
-          var scoresLi = document.createElement("li")
-          scoresLi.textContent = highScores[i].join (": ");
-          console.log(highScores[i]);
-          highScoresList.appendChild(scoresLi);
+      var scoresList = document.createElement("li")
+          highScoresList.appendChild(scoresList);
+          scoresList.textContent = highScores[highScores.length - 1].join (": ");
       }
-  localStorage.setItem('highscoreStorage', JSON.stringify(highScores));
-}}
+localStorage.setItem('highscoreStorage', JSON.stringify(highScores));
+}
 
-function initialize(){
+//first function on page.  Loads what's in storage and appends to working array
+function loadPage(){
 var lastScore = JSON.parse(localStorage.getItem('highscoreStorage'));
+highScores = lastScore;
+  if (lastScore !== null) {
+  for (var i = 0; i < lastScore.length; i++) {
+      var scoresList = document.createElement("li");
+      highScoresList.appendChild(scoresList);
+      scoresList.textContent = lastScore[i].join (": ");
+  }
+}
+  else {scoreUpdate.textContent = "No Highscores Recorded"
+  }
+  
 var startButton = document.getElementById("start-quiz");
 questionStructure.setAttribute("style", "display:none");
 scoreElement.setAttribute("style", "display:none");
@@ -205,5 +202,5 @@ startButton.addEventListener("click", () => {
 });
 
 }
-initialize();
+
 
